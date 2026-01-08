@@ -17,5 +17,11 @@ namespace TextRPG.Utils
             Console.WriteLine("===================================");
             Console.WriteLine();
         }
+
+        public static void PreesAnyKey()
+        {
+            Console.WriteLine("\n계속하려면 아무 키나 누르세요...");
+            Console.ReadKey(true);
+        }
     }
 }

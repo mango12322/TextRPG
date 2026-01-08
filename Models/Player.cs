@@ -78,7 +78,7 @@ namespace TextRPG.Models
         {
             base.PrintInfo();
             Console.WriteLine($"Gold: {Gold}");
-            Console.WriteLine("===============================");
+            Console.WriteLine("================================");
         }
         #endregion
     }

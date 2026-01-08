@@ -7,9 +7,7 @@ using TextRPG.Models;
 namespace TextRPG.Data
 {
     internal class GameManager
-    {
-        // 싱글톤 패턴 (Singleton Pattern) 구현
-
+    {       
         #region 싱글톤 패턴
         // 싱글톤 인스턴스 (내부 접근 용 전용: 필드)
         private static GameManager _instance;
@@ -37,6 +35,7 @@ namespace TextRPG.Data
 
         #region 프로퍼티
         public Player? player { get; private set; }
+        public bool IsRunning { get; private set; } = true;
         #endregion
 
         #region 게임 시작 메서드
@@ -49,6 +48,13 @@ namespace TextRPG.Data
 
             // 캐릭터 생성
             CreateCharacter();
+
+            // 메인 게임 루프
+            IsRunning = true;
+            while (IsRunning)
+                ShowMainMenu();
+
+
             // TODO : 인벤토리 초기화
             // TODO : 초기 아이템 지급
         }
@@ -105,6 +111,55 @@ namespace TextRPG.Data
             Console.WriteLine($"{name}님, {job}으로 캐릭터가 생성되었습니다.");
 
             player.PrintInfo();
+
+            ConsoleUi.PreesAnyKey();
+        }
+        #endregion
+
+        #region 메인메뉴
+        public void ShowMainMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("====================");
+            Console.WriteLine("|     메인 메뉴    |");
+            Console.WriteLine("====================");
+
+            Console.WriteLine("\n1. 상태 보기");
+            Console.WriteLine("2. 인벤토리");
+            Console.WriteLine("3. 상점");
+            Console.WriteLine("4. 던전입장 (전투)");
+            Console.WriteLine("5. 휴식 (HP/MP 회복)");
+            Console.WriteLine("6. 게임저장");
+            Console.WriteLine("0. 종료");
+
+            Console.Write("1~6 선택: ");
+            string? input = Console.ReadLine();
+
+            switch (input)
+            {
+                case "1":
+                    player?.PrintInfo();
+                    ConsoleUi.PreesAnyKey();
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    break;
+                case "5":
+                    break;
+                case "6":
+                    break;
+                case "0":
+                    IsRunning = false;
+                    Console.WriteLine("게임이 종료됩니다!");
+                    break;
+                default:
+                    Console.WriteLine("잘못된 선택입니다. 다시 선택해 주세요!");
+                    ConsoleUi.PreesAnyKey();
+                    break;                    
+            }
 
         }
         #endregion
