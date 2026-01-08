@@ -6,8 +6,7 @@ using TextRPG.Models;
 namespace TextRPG.Models
 {
     internal class Player :Character
-    {
-        
+    {        
         #region 프로퍼티        
 
         public JobType Job { get; private set; }        
@@ -71,6 +70,15 @@ namespace TextRPG.Models
                 default: return 10;
             }
 
+        }
+        #endregion
+
+        #region 메서드
+        public override void PrintInfo()
+        {
+            base.PrintInfo();
+            Console.WriteLine($"Gold: {Gold}");
+            Console.WriteLine("===============================");
         }
         #endregion
     }
