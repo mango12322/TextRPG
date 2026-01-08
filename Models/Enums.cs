@@ -11,5 +11,10 @@ namespace TextRPG.Models
         Wizard,
     }
 
-    
+    enum MonsterType
+    {
+        Slime,
+        Org,
+        Skelton,
+    }
 }

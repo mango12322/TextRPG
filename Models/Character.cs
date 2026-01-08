@@ -40,6 +40,7 @@ namespace TextRPG.Models
         // 캐릭터 스텟 출력
         public virtual void PrintInfo()
         {
+            Console.Clear();
             Console.WriteLine($"\n====== {Name}님 캐릭터 정보 ======");
             Console.WriteLine($"레벨: {Level}");
             Console.WriteLine($"체력: {CurrentHp}/{MaxHp}");

@@ -54,6 +54,8 @@ namespace TextRPG.Data
             while (IsRunning)
                 ShowMainMenu();
 
+            if (!IsRunning)
+                ConsoleUi.ShowGameOver();
 
             // TODO : 인벤토리 초기화
             // TODO : 초기 아이템 지급
@@ -111,6 +113,10 @@ namespace TextRPG.Data
             Console.WriteLine($"{name}님, {job}으로 캐릭터가 생성되었습니다.");
 
             player.PrintInfo();
+
+            // 적 캐릭터 생성
+            Enemy enemy = Enemy.CreateEnemy(player.Level);
+            enemy.PrintInfo();
 
             ConsoleUi.PreesAnyKey();
         }
