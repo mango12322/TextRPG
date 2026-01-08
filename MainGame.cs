@@ -3,7 +3,7 @@ using TextRPG.Data;
 
 namespace TextRPG
 {
-    internal class Program
+    internal class MainGame
     {
         static void Main(string[] args)
         {

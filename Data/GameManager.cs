@@ -35,6 +35,10 @@ namespace TextRPG.Data
         }
         #endregion
 
+        #region 프로퍼티
+        public Player? player { get; private set; }
+        #endregion
+
         #region 게임 시작 메서드
         public void StartGame()
         {
@@ -70,7 +74,7 @@ namespace TextRPG.Data
             Console.WriteLine("2: 궁수");
             Console.WriteLine("3: 마법사");
 
-            JobType job = JobType.WARRIAL;            
+            JobType job = JobType.Warrial;            
 
             while(true)
             {
@@ -80,13 +84,13 @@ namespace TextRPG.Data
                 switch (input)
                 {
                     case "1":
-                        job = JobType.WARRIAL;
+                        job = JobType.Warrial;
                         break;
                     case "2":
-                        job = JobType.ARCHER;
+                        job = JobType.Archer;
                         break;
                     case "3":
-                        job = JobType.WIZARD;
+                        job = JobType.Wizard;
                         break;
                     default:
                         Console.WriteLine("잘못된 입력입니다. 다시 선택해주세요!");
@@ -95,10 +99,11 @@ namespace TextRPG.Data
 
                 break;
             }
+
+            // 입력한 이름과 선택한 직업으로 플레이서 캐릭터 생성
+            player = new Player(name, job);
+            Console.WriteLine($"{name}님, {job}으로 캐릭터가 생성되었습니다.");
         }
-
-        // 0: 전사 1: 마법사 2: 궁수 - 열거형 변수 선언
-
         #endregion
     }
 }
