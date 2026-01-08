@@ -103,6 +103,12 @@ namespace TextRPG.Data
             // 입력한 이름과 선택한 직업으로 플레이서 캐릭터 생성
             player = new Player(name, job);
             Console.WriteLine($"{name}님, {job}으로 캐릭터가 생성되었습니다.");
+
+            Console.WriteLine($"Player Hp: {player.CurrentHp}");
+            Console.WriteLine($"Player Mp: {player.CurrentMp}");
+            Console.WriteLine($"Player Atk: {player.AttackPower}");
+            Console.WriteLine($"Player Def: {player.Defense}");
+
         }
         #endregion
     }
