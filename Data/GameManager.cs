@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TextRPG.Utils;
+using TextRPG.Models;
 
 namespace TextRPG.Data
 {
@@ -37,11 +38,67 @@ namespace TextRPG.Data
         #region 게임 시작 메서드
         public void StartGame()
         {
-            // TODO : 타이틀 표시
+            // 타이틀 표시
             ConsoleUi.ShowTitle();
 
             Console.WriteLine("RPG 게임에 오신것을 환영합니다!\n");
+
+            // 캐릭터 생성
+            CreateCharacter();
+            // TODO : 인벤토리 초기화
+            // TODO : 초기 아이템 지급
         }
+        #endregion
+
+        #region 캐릭터 생성
+        private void CreateCharacter()
+        {
+            // 이름 입력
+            Console.Write("캐릭터명을 입력하세요: ");
+            string? name = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                name = "무명용사";
+            }
+
+            Console.WriteLine($"{name}님, 환영합니다!");
+
+            // 직업 선택
+            Console.WriteLine("직업을 선택해주세요: ");
+            Console.WriteLine("1: 전사");
+            Console.WriteLine("2: 궁수");
+            Console.WriteLine("3: 마법사");
+
+            JobType job = JobType.WARRIAL;            
+
+            while(true)
+            {
+                Console.WriteLine("선택 (1-3): ");
+                string? input = Console.ReadLine();
+
+                switch (input)
+                {
+                    case "1":
+                        job = JobType.WARRIAL;
+                        break;
+                    case "2":
+                        job = JobType.ARCHER;
+                        break;
+                    case "3":
+                        job = JobType.WIZARD;
+                        break;
+                    default:
+                        Console.WriteLine("잘못된 입력입니다. 다시 선택해주세요!");
+                        continue;
+                }
+
+                break;
+            }
+        }
+
+        // 0: 전사 1: 마법사 2: 궁수 - 열거형 변수 선언
+
         #endregion
     }
 }
