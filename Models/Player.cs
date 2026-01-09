@@ -14,6 +14,7 @@ namespace TextRPG.Models
         // TODO: 장착 무기, 장착 방어구
         #endregion
 
+
         #region 생성자
         public Player(string name, JobType job) : base(
             name: name,
@@ -27,6 +28,7 @@ namespace TextRPG.Models
             Gold = 1000;
         }
         #endregion
+
 
         #region 직업별 스텟 초기화
         private static int GetInitHp(JobType job)

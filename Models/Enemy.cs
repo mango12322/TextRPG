@@ -21,6 +21,7 @@ namespace TextRPG.Models
         
         #endregion
 
+
         #region 메서드
         // 적 생성 메서드
         public static Enemy CreateEnemy(int playerLevel)

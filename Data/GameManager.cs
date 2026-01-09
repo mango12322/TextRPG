@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TextRPG.Utils;
 using TextRPG.Models;
+using TextRPG.Systems;
 
 namespace TextRPG.Data
 {
@@ -117,6 +118,10 @@ namespace TextRPG.Data
             // 적 캐릭터 생성
             Enemy enemy = Enemy.CreateEnemy(player.Level);
             enemy.PrintInfo();
+
+            // 전투 시스템
+            BattleSystem battleSystem = new BattleSystem();
+            battleSystem.StartBattle(player, enemy);
 
             ConsoleUi.PreesAnyKey();
         }
