@@ -36,7 +36,7 @@ namespace TextRPG.Models
             // 적 캐릭터의 스텟 (레벨에 비례)
             int maxHp = 50 + (enemyLevel - 1) * 30;
             int maxMp = 20 + (enemyLevel - 1) * 10;
-            int attackPower = 10 + (enemyLevel - 1) * 5;
+            int attackPower = 20 + (enemyLevel - 1) * 5;
             int defence = 5 + (enemyLevel - 1) * 3;
             int goldReward = 20 + (enemyLevel - 1) * 10;
 
@@ -51,6 +51,25 @@ namespace TextRPG.Models
             Console.WriteLine($"체력: {CurrentHp}/{MaxHp}");            
             Console.WriteLine($"공격력: {AttackPower}");
             Console.WriteLine($"방어력: {Defense}");
+        }
+
+        public override int Attack(Character target)
+        {
+            // return target.TakeDamage(AttackPower);
+
+            // 랜덤 공격력 부여 (일반 공격 70%, 강력한 공격 30%)
+            Random rand = new Random();
+
+            if(rand.NextDouble() < 0.7)
+            {
+                return target.TakeDamage(AttackPower);
+            }
+            else
+            {
+                Console.WriteLine($"{Name}의 강한 공격!");
+                int damage = (int)(AttackPower * 1.5);
+                return target.TakeDamage(damage);
+            }
         }
 
         #endregion

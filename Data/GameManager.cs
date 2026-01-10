@@ -31,11 +31,16 @@ namespace TextRPG.Data
         {
             // 클래스가 생성될 때 초기화 작업 수행
 
+            BattleSystem = new BattleSystem();
+
         }
         #endregion
 
         #region 프로퍼티
         public Player? player { get; private set; }
+
+        public BattleSystem BattleSystem { get; private set; }
+
         public bool IsRunning { get; private set; } = true;
         #endregion
 
@@ -115,14 +120,6 @@ namespace TextRPG.Data
 
             player.PrintInfo();
 
-            // 적 캐릭터 생성
-            Enemy enemy = Enemy.CreateEnemy(player.Level);
-            enemy.PrintInfo();
-
-            // 전투 시스템
-            BattleSystem battleSystem = new BattleSystem();
-            battleSystem.StartBattle(player, enemy);
-
             ConsoleUi.PreesAnyKey();
         }
         #endregion
@@ -157,6 +154,7 @@ namespace TextRPG.Data
                 case "3":
                     break;
                 case "4":
+                    EnterDungeon();
                     break;
                 case "5":
                     break;
@@ -172,6 +170,28 @@ namespace TextRPG.Data
                     break;                    
             }
 
+        }
+        #endregion
+
+        #region 메뉴 기능
+        // 던전 입장
+        public void EnterDungeon()
+        {
+            Console.Clear();
+            Console.WriteLine("\n던전에 입장합니다...");
+
+            // 적 캐릭터 생성
+            Enemy enemy = Enemy.CreateEnemy(player.Level);
+            ConsoleUi.PreesAnyKey();
+
+            enemy.PrintInfo();
+
+            // 전투 시스템
+            BattleSystem battleSystem = new BattleSystem();
+            battleSystem.StartBattle(player, enemy);
+
+            Console.WriteLine("\n던전 탐험을 마치고 마을로 돌아갑니다.");
+            ConsoleUi.PreesAnyKey();
         }
         #endregion
     }

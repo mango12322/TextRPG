@@ -56,9 +56,9 @@ namespace TextRPG.Models
         private static int GetInitAttack(JobType job) =>
             job switch
             {
-                JobType.Warrial => 20,
-                JobType.Archer => 25,
-                JobType.Wizard => 15,
+                JobType.Warrial => 15,
+                JobType.Archer => 20,
+                JobType.Wizard => 25,
                 _ => 20,
             };
 
@@ -82,6 +82,39 @@ namespace TextRPG.Models
             Console.WriteLine($"Gold: {Gold}");
             Console.WriteLine("================================");
         }
+
+        // 기본 공격 메서드
+        public override int Attack(Character target)
+        {
+            // TODO: 장착무기 또는 방어구에 따른 추가 데미지 계산
+            int attackDamage = AttackPower;
+
+            return target.TakeDamage(attackDamage);
+        }
+
+        // 스킬 공격 (MP 소모) : Player 전용 메서드
+        public int SkillAttack(Character target)
+        {
+            int mpCost = 15;
+
+            // 스킬 공격 = 기본 공격 * 1.5
+            int totalDamage = AttackPower;
+            totalDamage = (int)(totalDamage * 1.5);
+
+            // MP 소모
+            CurrentMp -= mpCost;
+
+            // 데미지 전달
+            return target.TakeDamage(totalDamage);            
+        }
+
+        // 골드 획득 메서드
+        public void GainGold(int amount)
+        {
+            Gold += amount;
+            Console.WriteLine($"\n{amount} 골드를 획득했습니다! 현재 골드: {Gold}");
+        }
+
         #endregion
     }
 }
