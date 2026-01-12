@@ -17,4 +17,11 @@ namespace TextRPG.Models
         Org,
         Skelton,
     }
+
+    enum ItemType
+    {
+        Weapon,
+        Armor,
+        Potion,
+    }
 }

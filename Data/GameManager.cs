@@ -8,17 +8,13 @@ using TextRPG.Systems;
 namespace TextRPG.Data
 {
     internal class GameManager
-    {       
-        #region 싱글톤 패턴
-        // 싱글톤 인스턴스 (내부 접근 용 전용: 필드)
+    {                       
         private static GameManager _instance;
-
-        // 외부에서 인스턴스에 접근 할 수 있는 프로퍼티
+        
         public static GameManager Instance 
         {
             get
-            {
-                // 인스턴스가 없으면 새로 생성
+            {                
                 if (_instance == null)
                 {
                     _instance = new GameManager();
@@ -27,35 +23,27 @@ namespace TextRPG.Data
             }
         }
 
-        private GameManager()
-        {
-            // 클래스가 생성될 때 초기화 작업 수행
+        public Player? player { get; private set; }
+        public BattleSystem BattleSystem { get; private set; }
+        public bool IsRunning { get; private set; } = true;
+        public InventorySystem Inventory { get; private set; }
 
+        private GameManager()
+        {            
             BattleSystem = new BattleSystem();
 
-        }
-        #endregion
+        }        
 
-        #region 프로퍼티
-        public Player? player { get; private set; }
-
-        public BattleSystem BattleSystem { get; private set; }
-
-        public bool IsRunning { get; private set; } = true;
-        #endregion
-
-        #region 게임 시작 메서드
+        
         public void StartGame()
-        {
-            // 타이틀 표시
+        {            
             ConsoleUi.ShowTitle();
 
             Console.WriteLine("RPG 게임에 오신것을 환영합니다!\n");
-
-            // 캐릭터 생성
+            
             CreateCharacter();
+            Inventory = new InventorySystem();
 
-            // 메인 게임 루프
             IsRunning = true;
             while (IsRunning)
                 ShowMainMenu();
@@ -65,13 +53,10 @@ namespace TextRPG.Data
 
             // TODO : 인벤토리 초기화
             // TODO : 초기 아이템 지급
-        }
-        #endregion
-
-        #region 캐릭터 생성
+        }        
+        
         private void CreateCharacter()
-        {
-            // 이름 입력
+        {            
             Console.Write("캐릭터명을 입력하세요: ");
             string? name = Console.ReadLine();
 
@@ -81,8 +66,7 @@ namespace TextRPG.Data
             }
 
             Console.WriteLine($"{name}님, 환영합니다!");
-
-            // 직업 선택
+            
             Console.WriteLine("직업을 선택해주세요: ");
             Console.WriteLine("1: 전사");
             Console.WriteLine("2: 궁수");
@@ -122,9 +106,7 @@ namespace TextRPG.Data
 
             ConsoleUi.PreesAnyKey();
         }
-        #endregion
-
-        #region 메인메뉴
+        
         public void ShowMainMenu()
         {
             Console.Clear();
@@ -146,19 +128,26 @@ namespace TextRPG.Data
             switch (input)
             {
                 case "1":
+                    // 플레이어 정보
                     player?.PrintInfo();
                     ConsoleUi.PreesAnyKey();
                     break;
                 case "2":
+                    // 인벤토리
+                    Inventory.ShowInventory();
                     break;
                 case "3":
+                    // 상점
                     break;
                 case "4":
+                    // 던전입장
                     EnterDungeon();
                     break;
                 case "5":
+                    // 휴식
                     break;
                 case "6":
+                    // 게임저장
                     break;
                 case "0":
                     IsRunning = false;
@@ -170,10 +159,8 @@ namespace TextRPG.Data
                     break;                    
             }
 
-        }
-        #endregion
-
-        #region 메뉴 기능
+        }        
+        
         // 던전 입장
         public void EnterDungeon()
         {
@@ -192,7 +179,6 @@ namespace TextRPG.Data
 
             Console.WriteLine("\n던전 탐험을 마치고 마을로 돌아갑니다.");
             ConsoleUi.PreesAnyKey();
-        }
-        #endregion
+        }        
     }
 }
