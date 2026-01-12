@@ -24,4 +24,10 @@ namespace TextRPG.Models
         Armor,
         Potion,
     }
+
+    enum EquipType
+    {
+        Weapon,
+        Armor,
+    }
 }

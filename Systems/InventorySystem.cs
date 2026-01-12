@@ -19,15 +19,13 @@ namespace TextRPG.Systems
             Items = new List<Item>();
         }
 
-
-        // 아이템 추가
+        
         public void AddItem(Item item)
         {
             Items.Add(item);
             Console.WriteLine($"{item.Name} 인벤토리에 추가했습니다.");
         }
-
-        // 아이템 삭제
+        
         public bool RemoveItem(Item item)
         {
             if (Items.Remove(item))
@@ -38,8 +36,7 @@ namespace TextRPG.Systems
 
             return false;
         }
-
-        // 인벤토리 출력
+        
         public void PrintInventory()
         {
             Console.Clear();
