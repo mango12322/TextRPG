@@ -25,7 +25,7 @@ namespace TextRPG.Models
         Potion,
     }
 
-    enum EquipType
+    enum EquipmentSlot    
     {
         Weapon,
         Armor,

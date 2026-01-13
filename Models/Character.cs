@@ -7,7 +7,6 @@ namespace TextRPG.Models
     // 캐릭터 기본 추상 클래스
     internal abstract class Character
     {
-        #region 프로퍼티
         public string Name { get; protected set; }
         public int CurrentHp { get; protected set; }
         public int MaxHp { get; protected set; }
@@ -17,11 +16,9 @@ namespace TextRPG.Models
         public int Defense { get; protected set; }
         public int Level { get; protected set; }
 
-        public bool IsAlive => CurrentHp > 0;        
-        #endregion
+        public bool IsAlive => CurrentHp > 0;
 
-        #region 생성자
-        public Character(string name, int maxHp, int maxMp ,int attackPower, int defense, int level)
+        public Character(string name, int maxHp, int maxMp, int attackPower, int defense, int level)
         {
             Name = name;
             MaxHp = maxHp;
@@ -32,9 +29,7 @@ namespace TextRPG.Models
             Defense = defense;
             Level = level;
         }
-        #endregion
 
-        #region 메서드
         // 공통으로 사용할 메서드들
         // 추상 메서드(abstract method) : 자식 클래스에서 반드시 구현해야 하는 메서드
         public abstract int Attack(Character target);
@@ -58,8 +53,21 @@ namespace TextRPG.Models
             Console.WriteLine($"체력: {CurrentHp}/{MaxHp}");
             Console.WriteLine($"마나: {CurrentMp}/{MaxMp}");
             Console.WriteLine($"공격력: {AttackPower}");
-            Console.WriteLine($"방어력: {Defense}");            
+            Console.WriteLine($"방어력: {Defense}");
         }
-        #endregion
+
+        public int HealHp(int amount)
+        {
+            int beforeHp = CurrentHp;
+            CurrentHp = Math.Min(MaxHp, CurrentHp + amount);
+            return CurrentHp - beforeHp;
+        }
+
+        public int HealMp(int amount)
+        {
+            int beforeMp = CurrentMp;
+            CurrentMp = Math.Min(MaxMp, CurrentMp + amount);
+            return CurrentMp - beforeMp;
+        }
     }
 }

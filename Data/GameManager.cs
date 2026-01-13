@@ -41,8 +41,10 @@ namespace TextRPG.Data
 
             Console.WriteLine("RPG 게임에 오신것을 환영합니다!\n");
             
-            CreateCharacter();
-            Inventory = new InventorySystem();
+            CreateCharacter();            
+            
+            Inventory = new InventorySystem();            
+            SetupInitialItems();
 
             IsRunning = true;
             while (IsRunning)
@@ -51,8 +53,7 @@ namespace TextRPG.Data
             if (!IsRunning)
                 ConsoleUi.ShowGameOver();
 
-            // TODO : 인벤토리 초기화
-            // TODO : 초기 아이템 지급
+
         }        
         
         private void CreateCharacter()
@@ -106,7 +107,20 @@ namespace TextRPG.Data
 
             ConsoleUi.PreesAnyKey();
         }
-        
+
+        private void SetupInitialItems()
+        {
+            Inventory.AddItem(Equipment.CreateWeapon("목검"));
+            Inventory.AddItem(Equipment.CreateArmor("천갑옷"));
+
+            Inventory.AddItem(Consumable.CreatePotion("체력포션"));
+            Inventory.AddItem(Consumable.CreatePotion("체력포션"));
+            Inventory.AddItem(Consumable.CreatePotion("마나포션"));
+
+            Console.WriteLine("\n초기 장비를 지급하였습니다.");
+            ConsoleUi.PreesAnyKey();
+        }
+
         public void ShowMainMenu()
         {
             Console.Clear();
