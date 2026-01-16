@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TextRPG.Models;
+using TextRPG.Utils;
 
 namespace TextRPG.Systems
 {
@@ -74,8 +75,11 @@ namespace TextRPG.Systems
                 {
                     case "1":
                         UseItem(player);
+                        ConsoleUi.PreesAnyKey();
                         break;
                     case "2":
+                        DropItem();
+                        ConsoleUi.PreesAnyKey();
                         break;
                     case "0":
                         return;
@@ -105,7 +109,7 @@ namespace TextRPG.Systems
                 }
                 if (index < 1 || index > Items.Count)
                 {
-                    Console.WriteLine("잘못된 선택입니다.");
+                    Console.WriteLine("잘못된 선택입니다.");                    
                     return;
                 }
 
@@ -116,6 +120,8 @@ namespace TextRPG.Systems
                     if (item is Consumable)
                     {
                         RemoveItem(item);
+                        Console.WriteLine($"{item.Name}을(를) 사용했습니다.");                        
+                        return;
                     }
                 }
             }
@@ -124,5 +130,46 @@ namespace TextRPG.Systems
                 Console.WriteLine("잘못된 선택 입니다.");
             }
         }
+
+        /* 아이템 버리기 */ 
+        private void DropItem()
+        {
+            if (Items.Count == 0)
+            {
+                Console.WriteLine("인벤토리가 비어있습니다.");
+                return;
+            }
+
+            Console.WriteLine("\n버릴 아에템 번호 (0:취소) > ");
+
+            if (int.TryParse(Console.ReadLine(), out int index))
+            {
+                if (index == 0)
+                {
+                    return; // 취소
+                }
+                if (index < 1 || index > Items.Count)
+                {
+                    Console.WriteLine("잘못된 선택입니다.");                    
+                    return;
+                }
+                Item item = Items[index - 1];
+                Console.WriteLine($"정말 {item.Name}을 버리시겠습니까? (y/n)");
+                if (Console.ReadLine()?.ToLower() != "y")
+                {
+                    Console.WriteLine("버리기를 취소했습니다.");                    
+                    return;
+                }
+                else
+                {
+                    RemoveItem(item);                    
+                }
+            }
+            else
+            {
+                Console.WriteLine("잘못된 선택 입니다.");                
+            }
+        }
+
     }
 }
