@@ -148,7 +148,7 @@ namespace TextRPG.Data
                     break;
                 case "2":
                     // 인벤토리
-                    Inventory.ShowInventory();
+                    Inventory.ShowInventory(player);
                     break;
                 case "3":
                     // 상점

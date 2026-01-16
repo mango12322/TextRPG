@@ -6,16 +6,13 @@ using TextRPG.Models;
 namespace TextRPG.Models
 {
     internal class Player :Character
-    {        
-        #region 프로퍼티        
-
+    {                
         public JobType Job { get; private set; }        
         public int Gold { get; private set; }
-        // TODO: 장착 무기, 장착 방어구
-        #endregion
+        public Equipment EquipedWeapon { get; private set; }
+        public Equipment EquipedArmor { get; private set; }        
 
-
-        #region 생성자
+        
         public Player(string name, JobType job) : base(
             name: name,
             maxHp: GetInitHp(job),
@@ -27,10 +24,7 @@ namespace TextRPG.Models
             Job = job;
             Gold = 1000;
         }
-        #endregion
-
-
-        #region 직업별 스텟 초기화
+                
         private static int GetInitHp(JobType job)
         {
             switch (job)
@@ -72,21 +66,17 @@ namespace TextRPG.Models
                 default: return 10;
             }
 
-        }
-        #endregion
-
-        #region 메서드
+        }        
+        
         public override void PrintInfo()
         {
             base.PrintInfo();
             Console.WriteLine($"Gold: {Gold}");
             Console.WriteLine("================================");
         }
-
-        // 기본 공격 메서드
+        
         public override int Attack(Character target)
-        {
-            // TODO: 장착무기 또는 방어구에 따른 추가 데미지 계산
+        {            
             int attackDamage = AttackPower;
 
             return target.TakeDamage(attackDamage);
@@ -100,21 +90,78 @@ namespace TextRPG.Models
             // 스킬 공격 = 기본 공격 * 1.5
             int totalDamage = AttackPower;
             totalDamage = (int)(totalDamage * 1.5);
-
-            // MP 소모
+            
             CurrentMp -= mpCost;
-
-            // 데미지 전달
+            
             return target.TakeDamage(totalDamage);            
         }
-
-        // 골드 획득 메서드
+        
         public void GainGold(int amount)
         {
             Gold += amount;
             Console.WriteLine($"\n{amount} 골드를 획득했습니다! 현재 골드: {Gold}");
         }
 
-        #endregion
+        /* 장비 장착 메서드 */
+        public void EquipItem(Equipment newEquipment)
+        {
+            Equipment? prevEquipment = null;
+
+            switch (newEquipment.Slot)
+            {
+                case EquipmentSlot.Weapon:
+                    prevEquipment = EquipedWeapon;
+                    EquipedWeapon = newEquipment;
+                    break;
+
+                case EquipmentSlot.Armor:
+                    prevEquipment = EquipedArmor;
+                    EquipedArmor = newEquipment;
+                    break;
+
+                default:
+                    Console.WriteLine("잘못된 장비 슬롯입니다.");
+                    return;
+            }
+
+            if (prevEquipment != null)
+            {
+                Console.WriteLine($"{prevEquipment.Name} 장착 해제");
+            }
+
+            Console.WriteLine($"{newEquipment.Name} 장착 완료");
+        }
+
+        /* 장비 해제 메서드 */
+        public Equipment? UnequipItem(EquipmentSlot slot)
+        {
+            Equipment? equipment = null;
+
+            switch (slot)
+            {
+                case EquipmentSlot.Weapon:
+                    equipment = EquipedWeapon;
+                    EquipedWeapon = null;
+                    break;
+                case EquipmentSlot.Armor:
+                    equipment = EquipedArmor;
+                    EquipedArmor = null;
+                    break;
+                default:
+                    Console.WriteLine("잘못된 장비 슬롯입니다.");
+                    return null;
+            }
+
+            if (equipment != null)
+            {
+                Console.WriteLine($"{equipment.Name} 장비 해제 완료");
+            }
+            else
+            {
+                Console.WriteLine("해제할 장비가 없습니다.");
+            }
+
+            return equipment;
+        }
     }
 }

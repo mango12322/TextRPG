@@ -56,7 +56,7 @@ namespace TextRPG.Systems
             }
         }
 
-        public void ShowInventory() 
+        public void ShowInventory(Player? player) 
         {
             while (true)
             {
@@ -73,6 +73,7 @@ namespace TextRPG.Systems
                 switch (input)
                 {
                     case "1":
+                        UseItem(player);
                         break;
                     case "2":
                         break;
@@ -82,6 +83,45 @@ namespace TextRPG.Systems
                         Console.WriteLine("잘못된 선택입니다. 다시 선택하세요.");
                         break;
                 }
+            }
+        }
+
+        /* 아이템 사용 */
+        private void UseItem(Player player)
+        {
+            if (Items.Count == 0)
+            {
+                Console.WriteLine("인벤토리가 비어있습니다.");
+                return;
+            }
+
+            Console.WriteLine("\n사용할 아이템 번호 (0: 취소) > ");
+
+            if (int.TryParse(Console.ReadLine(), out int index))
+            {
+                if (index == 0)
+                {
+                    return; // 취소
+                }
+                if (index < 1 || index > Items.Count)
+                {
+                    Console.WriteLine("잘못된 선택입니다.");
+                    return;
+                }
+
+                Item item = Items[index - 1];
+                if (item.Use(player))
+                {
+                    /* 소모품일 경우 사용 후 리스트에서 제거함 */
+                    if (item is Consumable)
+                    {
+                        RemoveItem(item);
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("잘못된 선택 입니다.");
             }
         }
     }
