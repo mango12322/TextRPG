@@ -110,12 +110,18 @@ namespace TextRPG.Data
 
         private void SetupInitialItems()
         {
-            Inventory.AddItem(Equipment.CreateWeapon("목검"));
-            Inventory.AddItem(Equipment.CreateArmor("천갑옷"));
+            var weapon = Equipment.CreateWeapon("목검");
+            var armor = Equipment.CreateArmor("천갑옷");
+
+            Inventory.AddItem(weapon);
+            Inventory.AddItem(armor);
 
             Inventory.AddItem(Consumable.CreatePotion("체력포션"));
             Inventory.AddItem(Consumable.CreatePotion("체력포션"));
             Inventory.AddItem(Consumable.CreatePotion("마나포션"));
+
+            player.EquipItem(weapon);
+            player.EquipItem(armor);
 
             Console.WriteLine("\n초기 장비를 지급하였습니다.");
             ConsoleUi.PreesAnyKey();

@@ -24,7 +24,8 @@ namespace TextRPG.Models
             Job = job;
             Gold = 1000;
         }
-                
+
+        /* 초기 스탯 설정 메서드 */
         private static int GetInitHp(JobType job)
         {
             switch (job)
@@ -50,9 +51,9 @@ namespace TextRPG.Models
         private static int GetInitAttack(JobType job) =>
             job switch
             {
-                JobType.Warrial => 15,
-                JobType.Archer => 20,
-                JobType.Wizard => 25,
+                JobType.Warrial => 10,
+                JobType.Archer => 15,
+                JobType.Wizard => 20,
                 _ => 20,
             };
 
@@ -66,15 +67,44 @@ namespace TextRPG.Models
                 default: return 10;
             }
 
-        }        
-        
+        }
+
+        /* 캐릭터 정보 출력 메서드 재정의 */
         public override void PrintInfo()
         {
-            base.PrintInfo();
+            // base.PrintInfo();
+            Console.Clear();
+            Console.WriteLine($"======= {Name} 정보 ======");
+            Console.WriteLine($"레벌: {Level}");
+            Console.WriteLine($"직업: {Job}");
+            Console.WriteLine($"체력: {CurrentHp}/{MaxHp}");
+            Console.WriteLine($"마나: {CurrentMp}/{MaxMp}");
+
+            int attackBonus = EquipedWeapon != null ? EquipedWeapon.AttackBonus : 0;
+            int defenseBonus = EquipedArmor != null ? EquipedArmor.DefenseBonus : 0;
+
+            Console.WriteLine($"ATK: {AttackPower + attackBonus} (+{attackBonus})");
+            Console.WriteLine($"DEF: {Defense + defenseBonus} (+{defenseBonus})");
             Console.WriteLine($"Gold: {Gold}");
-            Console.WriteLine("================================");
+
+            /* 장착 아이템 목록 */
+            if (EquipedWeapon != null || EquipedArmor != null)
+            {
+                Console.WriteLine("\n[장착 중인 장비 목록");
+                if (EquipedWeapon != null)
+                {
+                    Console.WriteLine($"- 무기: {EquipedWeapon.Name} (ATK +{EquipedWeapon.AttackBonus})");
+                }
+
+                if (EquipedArmor != null)
+                {
+                    Console.WriteLine($"- 방어구: {EquipedArmor.Name} (DEF +{EquipedArmor.DefenseBonus})");
+                }
+            }
+            
         }
-        
+
+        /* 공격 메서드 재정의 */
         public override int Attack(Character target)
         {            
             int attackDamage = AttackPower;
@@ -82,12 +112,11 @@ namespace TextRPG.Models
             return target.TakeDamage(attackDamage);
         }
 
-        // 스킬 공격 (MP 소모) : Player 전용 메서드
+        /* 스킬 공격 메서드 */
         public int SkillAttack(Character target)
         {
             int mpCost = 15;
-
-            // 스킬 공격 = 기본 공격 * 1.5
+            
             int totalDamage = AttackPower;
             totalDamage = (int)(totalDamage * 1.5);
             

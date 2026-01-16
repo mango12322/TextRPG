@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TextRPG.Models
 {
-    // 캐릭터 기본 추상 클래스
+    /* 모든 캐릭터의 공통 속성과 메서드를 정의하는 추상 클래스 */
     internal abstract class Character
     {
         public string Name { get; protected set; }
@@ -44,7 +44,7 @@ namespace TextRPG.Models
             return actualDamage;
         }
 
-        // 캐릭터 스텟 출력
+        /* 캐릭터 정보 출력 메서드 */
         public virtual void PrintInfo()
         {
             Console.Clear();
