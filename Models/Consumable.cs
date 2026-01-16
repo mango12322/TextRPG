@@ -78,7 +78,7 @@ namespace TextRPG.Models
                         description: "MP를 30만큼 회복시켜주는 포션입니다.",
                         price: 150,
                         mpAmount: 50);                    
-                case "대형 마나포션":
+                case "대형마나포션":
                     return new Consumable(
                         name: "대형마나포션",
                         description: "MP를 100만큼 회복시켜주는 포션입니다.",

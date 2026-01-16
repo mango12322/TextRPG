@@ -134,6 +134,18 @@ namespace TextRPG.Models
             Console.WriteLine($"\n{amount} 골드를 획득했습니다! 현재 골드: {Gold}");
         }
 
+        public void SpendGold(int amount)
+        {
+            if (amount > Gold)
+            {
+                Console.WriteLine("골드가 부족합니다.");
+                return;
+            }
+            Gold -= amount;
+            Console.WriteLine($"\n{amount} 골드를 사용했습니다. 현재 골드: {Gold}");
+
+        }
+
         /* 장비 장착 메서드 */
         public void EquipItem(Equipment newEquipment)
         {
