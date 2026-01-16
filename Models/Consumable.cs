@@ -66,9 +66,9 @@ namespace TextRPG.Models
                         description: "HP를 50만큼 회복시켜주는 포션입니다.",
                         price: 100,
                         hpAmount: 50);                    
-                case "대형 체력포션":
+                case "대형체력포션":
                     return new Consumable(
-                        name: "대형 체력포션",
+                        name: "대형체력포션",
                         description: "HP를 150만큼 회복시켜주는 포션입니다.",
                         price: 300,
                         hpAmount: 150);                    
@@ -80,7 +80,7 @@ namespace TextRPG.Models
                         mpAmount: 50);                    
                 case "대형 마나포션":
                     return new Consumable(
-                        name: "대형 마나포션",
+                        name: "대형마나포션",
                         description: "MP를 100만큼 회복시켜주는 포션입니다.",
                         price: 300,
                         mpAmount: 100);                    

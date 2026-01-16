@@ -27,11 +27,12 @@ namespace TextRPG.Data
         public BattleSystem BattleSystem { get; private set; }
         public bool IsRunning { get; private set; } = true;
         public InventorySystem Inventory { get; private set; }
+        public ShopSystem Shop { get; private set; }
 
         private GameManager()
         {            
             BattleSystem = new BattleSystem();
-
+            Shop = new ShopSystem();
         }        
 
         
@@ -99,7 +100,7 @@ namespace TextRPG.Data
                 break;
             }
 
-            // 입력한 이름과 선택한 직업으로 플레이서 캐릭터 생성
+            /* 캐릭터 생성 */
             player = new Player(name, job);
             Console.WriteLine($"{name}님, {job}으로 캐릭터가 생성되었습니다.");
 
@@ -148,26 +149,27 @@ namespace TextRPG.Data
             switch (input)
             {
                 case "1":
-                    // 플레이어 정보
+                    /* 상태 보기 */
                     player?.PrintInfo();
                     ConsoleUi.PreesAnyKey();
                     break;
                 case "2":
-                    // 인벤토리
+                    /* 인벤토리 */
                     Inventory.ShowInventory(player);
                     break;
                 case "3":
-                    // 상점
+                    /* 상점 */
+                    Shop.ShowShopMenu(player, Inventory);
                     break;
                 case "4":
-                    // 던전입장
+                    /* 던전 입장 */
                     EnterDungeon();
                     break;
                 case "5":
-                    // 휴식
+                    /* 휴식 */
                     break;
                 case "6":
-                    // 게임저장
+                    /* 게임저장 */
                     break;
                 case "0":
                     IsRunning = false;
@@ -179,9 +181,9 @@ namespace TextRPG.Data
                     break;                    
             }
 
-        }        
-        
-        // 던전 입장
+        }
+
+        /* 던전 입장 */
         public void EnterDungeon()
         {
             Console.Clear();
