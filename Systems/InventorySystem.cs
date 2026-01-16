@@ -78,7 +78,7 @@ namespace TextRPG.Systems
                         ConsoleUi.PreesAnyKey();
                         break;
                     case "2":
-                        DropItem();
+                        DropItem(player);
                         ConsoleUi.PreesAnyKey();
                         break;
                     case "0":
@@ -132,7 +132,7 @@ namespace TextRPG.Systems
         }
 
         /* 아이템 버리기 */ 
-        private void DropItem()
+        private void DropItem(Player player)
         {
             if (Items.Count == 0)
             {
@@ -153,6 +153,7 @@ namespace TextRPG.Systems
                     Console.WriteLine("잘못된 선택입니다.");                    
                     return;
                 }
+
                 Item item = Items[index - 1];
                 Console.WriteLine($"정말 {item.Name}을 버리시겠습니까? (y/n)");
                 if (Console.ReadLine()?.ToLower() != "y")
@@ -162,7 +163,21 @@ namespace TextRPG.Systems
                 }
                 else
                 {
-                    RemoveItem(item);                    
+                    if (item is Equipment equipment)
+                    {
+                        /* 장비 아이템일 경우 장착 해제 */
+                        if (equipment == player.EquipedWeapon)
+                        {
+                            player.UnequipItem(EquipmentSlot.Weapon);
+                        }
+                        else if (equipment == player.EquipedArmor)
+                        {
+                            player.UnequipItem(EquipmentSlot.Armor);
+                        }
+                    }
+                    RemoveItem(item);
+
+                    Console.WriteLine($"{item.Name}을 버렸습니다.");                    
                 }
             }
             else

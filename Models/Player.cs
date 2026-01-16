@@ -109,6 +109,8 @@ namespace TextRPG.Models
         {            
             int attackDamage = AttackPower;
 
+            attackDamage += EquipedWeapon != null ? EquipedWeapon.AttackBonus : 0;
+
             return target.TakeDamage(attackDamage);
         }
 
@@ -118,6 +120,7 @@ namespace TextRPG.Models
             int mpCost = 15;
             
             int totalDamage = AttackPower;
+            totalDamage += EquipedWeapon != null ? EquipedWeapon.AttackBonus : 0;
             totalDamage = (int)(totalDamage * 1.5);
             
             CurrentMp -= mpCost;
