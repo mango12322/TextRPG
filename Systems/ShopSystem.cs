@@ -187,14 +187,14 @@ namespace TextRPG.Systems
                     Console.WriteLine($"{item.Name}을(를) {sellPrice}골드에 판매하시겠습니까? (y/n): ");
                     if (Console.ReadLine()?.ToLower() == "y")
                     {
-                        player.GainGold(sellPrice);
-                        inventory.RemoveItem(item);
-
                         if (item is Equipment equipment)
                         {
                             player.UnequipItem(equipment.Slot);
                         }
                         
+                        player.GainGold(sellPrice);
+                        inventory.RemoveItem(item);
+
                         Console.WriteLine($"{item.Name}을(를) {sellPrice}골드에 판매했습니다.");
                         ConsoleUi.PreesAnyKey();
                     }

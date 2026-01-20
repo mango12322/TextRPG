@@ -8,7 +8,7 @@ namespace TextRPG.Models
     internal class Player :Character
     {                
         public JobType Job { get; private set; }        
-        public int Gold { get; private set; }
+        public int Gold { get; set; }
         public Equipment EquipedWeapon { get; private set; }
         public Equipment EquipedArmor { get; private set; }        
 
@@ -30,7 +30,7 @@ namespace TextRPG.Models
         {
             switch (job)
             {
-                case JobType.Warrial: return 150;
+                case JobType.Worrial: return 150;
                 case JobType.Archer: return 100;
                 case JobType.Wizard: return 80;
                 default: return 100;
@@ -41,7 +41,7 @@ namespace TextRPG.Models
         {
             switch (job)
             {
-                case JobType.Warrial: return 30;
+                case JobType.Worrial: return 30;
                 case JobType.Archer: return 50;
                 case JobType.Wizard: return 100;
                 default: return 30;
@@ -51,7 +51,7 @@ namespace TextRPG.Models
         private static int GetInitAttack(JobType job) =>
             job switch
             {
-                JobType.Warrial => 10,
+                JobType.Worrial => 10,
                 JobType.Archer => 15,
                 JobType.Wizard => 20,
                 _ => 20,
@@ -61,7 +61,7 @@ namespace TextRPG.Models
         {
             switch (job)
             {
-                case JobType.Warrial: return 15;
+                case JobType.Worrial: return 15;
                 case JobType.Archer: return 10;
                 case JobType.Wizard: return 5;
                 default: return 10;
@@ -118,14 +118,20 @@ namespace TextRPG.Models
         public int SkillAttack(Character target)
         {
             int mpCost = 15;
-            
+
+            if (CurrentMp < mpCost)
+            {
+                Console.WriteLine("마나가 부족합니다!");
+                return 0;
+            }
+
             int totalDamage = AttackPower;
             totalDamage += EquipedWeapon != null ? EquipedWeapon.AttackBonus : 0;
             totalDamage = (int)(totalDamage * 1.5);
-            
+
             CurrentMp -= mpCost;
-            
-            return target.TakeDamage(totalDamage);            
+
+            return target.TakeDamage(totalDamage);
         }
         
         public void GainGold(int amount)

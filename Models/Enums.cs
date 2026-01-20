@@ -6,7 +6,7 @@ namespace TextRPG.Models
 {
     enum JobType
     {
-        Warrial,
+        Worrial,
         Archer,
         Wizard,
     }

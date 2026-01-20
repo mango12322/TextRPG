@@ -7,14 +7,14 @@ namespace TextRPG.Models
     /* 모든 캐릭터의 공통 속성과 메서드를 정의하는 추상 클래스 */
     internal abstract class Character
     {
-        public string Name { get; protected set; }
-        public int CurrentHp { get; protected set; }
-        public int MaxHp { get; protected set; }
-        public int CurrentMp { get; protected set; }
-        public int MaxMp { get; protected set; }
-        public int AttackPower { get; protected set; }
-        public int Defense { get; protected set; }
-        public int Level { get; protected set; }
+        public string Name { get;  set; }
+        public int CurrentHp { get;  set; }
+        public int MaxHp { get;  set; }
+        public int CurrentMp { get;  set; }
+        public int MaxMp { get;  set; }
+        public int AttackPower { get;  set; }
+        public int Defense { get;  set; }
+        public int Level { get;  set; }
 
         public bool IsAlive => CurrentHp > 0;
 

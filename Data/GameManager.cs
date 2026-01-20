@@ -36,16 +36,19 @@ namespace TextRPG.Data
         }        
 
         
-        public void StartGame()
+        public void StartGame(bool loadedGame = false)
         {            
             ConsoleUi.ShowTitle();
 
             Console.WriteLine("RPG 게임에 오신것을 환영합니다!\n");
             
-            CreateCharacter();            
+            if (!loadedGame)
+            {
+                CreateCharacter();            
             
-            Inventory = new InventorySystem();            
-            SetupInitialItems();
+                Inventory = new InventorySystem();            
+                SetupInitialItems();
+            }
 
             IsRunning = true;
             while (IsRunning)
@@ -74,7 +77,7 @@ namespace TextRPG.Data
             Console.WriteLine("2: 궁수");
             Console.WriteLine("3: 마법사");
 
-            JobType job = JobType.Warrial;            
+            JobType job = JobType.Worrial;            
 
             while(true)
             {
@@ -84,7 +87,7 @@ namespace TextRPG.Data
                 switch (input)
                 {
                     case "1":
-                        job = JobType.Warrial;
+                        job = JobType.Worrial;
                         break;
                     case "2":
                         job = JobType.Archer;
@@ -191,15 +194,12 @@ namespace TextRPG.Data
             Console.Clear();
             Console.WriteLine("\n던전에 입장합니다...");
 
-            // 적 캐릭터 생성
             Enemy enemy = Enemy.CreateEnemy(player.Level);
             ConsoleUi.PreesAnyKey();
 
             enemy.PrintInfo();
 
-            // 전투 시스템
-            BattleSystem battleSystem = new BattleSystem();
-            battleSystem.StartBattle(player, enemy);
+            BattleSystem.StartBattle(player, enemy);
 
             Console.WriteLine("\n던전 탐험을 마치고 마을로 돌아갑니다.");
             ConsoleUi.PreesAnyKey();
@@ -252,6 +252,26 @@ namespace TextRPG.Data
             }
         }
 
+        /* 게임 로드 */
+        public bool LoadGame()
+        {
+            var saveData = SaveLoadSystem.LoadGame(); 
+            if (saveData == null)
+            {
+                Console.WriteLine("\n저장된 게임 데이터가 없습니다.");
+                ConsoleUi.PreesAnyKey();
+                return false;
+            }
 
+            player = SaveLoadSystem.LoadPlayer(saveData.Player);
+            Inventory = SaveLoadSystem.LoadInventory(saveData.Inventory, player);
+            SaveLoadSystem.LoadEquippedItems(player, saveData.Player, Inventory);
+
+            Console.WriteLine("\n게임 데이터를 불러왔습니다.");
+            ConsoleUi.PreesAnyKey();
+            return true;
         }
+
+
+    }
 }

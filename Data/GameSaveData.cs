@@ -8,7 +8,7 @@ namespace TextRPG.Data
     internal class GameSaveData
     {
         public PlayerData Player { get; set; }
-        public List<ItemData> InventoryItems { get; set; } = new List<ItemData>();
+        public List<ItemData> Inventory { get; set; }
     }
 
     public class PlayerData
