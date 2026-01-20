@@ -167,6 +167,7 @@ namespace TextRPG.Data
                     break;
                 case "5":
                     /* 휴식 */
+                    Rest();
                     break;
                 case "6":
                     /* 게임저장 */
@@ -202,5 +203,35 @@ namespace TextRPG.Data
             Console.WriteLine("\n던전 탐험을 마치고 마을로 돌아갑니다.");
             ConsoleUi.PreesAnyKey();
         }        
+
+        /* 휴식 */
+        private void Rest()
+        {
+            const int restCost = 50;
+
+            Console.Clear();
+            Console.WriteLine($"\n휴식을 취합니다.");
+            Console.WriteLine($"\n비용 : {restCost} 골드");
+
+            if (player.Gold < restCost)
+            {
+                Console.WriteLine("골드가 부족합니다. 휴식을 취할 수 없습니다.");
+                ConsoleUi.PreesAnyKey();
+                return;
+            }
+
+            Console.Write("\n휴식을 취하겠습니까? (y/n)");
+            if (Console.ReadLine()?.ToLower() == "y")
+            {
+                player.SpendGold(restCost);
+                player.HealHp(player.MaxHp);
+                player.HealMp(player.MaxMp);
+                Console.WriteLine("\n휴식을 취했습니다. HP와 MP가 모두 회복되었습니다.");
+            }
+            else
+            {
+                Console.WriteLine("\n휴식을 취하지 않았습니다.");
+            }
+        }
     }
 }
