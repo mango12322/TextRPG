@@ -171,6 +171,7 @@ namespace TextRPG.Data
                     break;
                 case "6":
                     /* 게임저장 */
+                    SaveGame();
                     break;
                 case "0":
                     IsRunning = false;
@@ -233,5 +234,24 @@ namespace TextRPG.Data
                 Console.WriteLine("\n휴식을 취하지 않았습니다.");
             }
         }
-    }
+
+        /* 저장 기능 */
+        public void SaveGame()
+        {
+            if (player == null || Inventory == null)
+            {
+                Console.WriteLine("\n저장할 게임 데이터가 없습니다.");
+                ConsoleUi.PreesAnyKey();
+                return;
+            }
+
+            if (SaveLoadSystem.SaveGame(player, Inventory))
+            {
+                Console.WriteLine("\n정상적으로 게임이 저장되었습니다.");
+                ConsoleUi.PreesAnyKey();
+            }
+        }
+
+
+        }
 }
