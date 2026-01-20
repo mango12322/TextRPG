@@ -37,6 +37,15 @@ namespace TextRPG.Systems
 
             return false;
         }
+
+        public Item? GetItem(int index)
+        {
+            if (index < 0 || index >= Items.Count)
+            {
+                return null;
+            }
+            return Items[index];
+        }
         
         public void PrintInventory()
         {

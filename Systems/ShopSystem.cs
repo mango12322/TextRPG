@@ -67,6 +67,7 @@ namespace TextRPG.Systems
                         break;
                     case "2":
                         /* 아이템 판매 */
+                        sellItem(player, inventory);
                         break;
                     case "0":
                         Console.WriteLine("상점을 나갑니다....");
@@ -164,6 +165,46 @@ namespace TextRPG.Systems
         }
 
 
+        private void sellItem(Player player, InventorySystem inventory)
+        {
+            if (inventory.Count == 0)
+            {
+                Console.WriteLine("\n판매할 아이템이 없습니다.");
+                return;
+            }
 
-    }
+            inventory.PrintInventory();
+
+            Console.WriteLine("\n판매할 아이템 번호를 선택하세요. (0:취소) > ");
+            if (int.TryParse(Console.ReadLine(), out var index) && index > 0 && index <= inventory.Count)
+            {
+                Item? item = inventory.GetItem(index - 1);
+
+                if (item != null)
+                {
+                    int sellPrice = item.Price / 2; // 판매 가격은 구매 가격의 절반
+
+                    Console.WriteLine($"{item.Name}을(를) {sellPrice}골드에 판매하시겠습니까? (y/n): ");
+                    if (Console.ReadLine()?.ToLower() == "y")
+                    {
+                        player.GainGold(sellPrice);
+                        inventory.RemoveItem(item);
+
+                        if (item is Equipment equipment)
+                        {
+                            player.UnequipItem(equipment.Slot);
+                        }
+                        
+                        Console.WriteLine($"{item.Name}을(를) {sellPrice}골드에 판매했습니다.");
+                        ConsoleUi.PreesAnyKey();
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("판매를 취소합니다.");
+            }
+        }
+
+        }
 }
